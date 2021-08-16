@@ -10,33 +10,31 @@
 </h:head>
 
 <f:view>
-    <p:outputPanel id="searchPanel">
-        <p:panel>
-            <h:form id="formLink">
-                <p:outputLabel for="linkFormInput" value="Анализируемая страница"/>
-                <p:inputText style="width: 100%" id="linkFormInput" value="#{resultAnalyze.url}"
-                             title="Пожалуйта введите ссылку"/>
-                <div style="display:flex; justify-content: center;">
-                    <p:commandButton value="Анализировать" style="width: 50%"
-                                     action="#{resultAnalyze.findAllNodes()}"
-                                     onstart="PF('dlg').show()"
-                                     oncomplete="PF('dlg').hide()"
-                                     update="linkPanel, growlError"/>
-                </div>
-            </h:form>
-        </p:panel>
-    </p:outputPanel>
+    <p:panel id="searchPanel">
+        <h:form id="formLink">
+            <p:outputLabel for="linkFormInput" value="Анализируемая страница"/>
+            <p:inputText style="width: 100%" id="linkFormInput" value="#{resultAnalyze.url}"
+                         title="Пожалуйта введите ссылку"/>
+            <div style="display:flex; justify-content: center;">
+                <p:commandButton value="Анализировать" style="width: 50%"
+                                 action="#{resultAnalyze.findAllNodes()}"
+                                 onstart="PF('dlg').show()"
+                                 oncomplete="PF('dlg').hide()"
+                                 update="linkPanel, growlError"/>
+            </div>
+        </h:form>
+    </p:panel>
 
-    <p:outputPanel id="linkPanel">
+    <h:panelGroup id="linkPanel">
         <p:panel rendered="#{not empty resultAnalyze.tagAList}">
             <p:outputLabel for="tableLinks" value="Обнаруженные ссылки"/>
             <p:dataTable scrollable="true" scrollHeight="650" styleClass="table table-hover"
-                    id="tableLinks"
+                         id="tableLinks"
                          value="#{resultAnalyze.tagAList}"
-                    var="tagA"
-                    rowIndexVar="index">
+                         var="tagA"
+                         rowIndexVar="ind">
                 <p:column headerText="Номер" style="width: auto">
-                    #{index+1}
+                    #{ind+1}
                 </p:column>
                 <p:column headerText="Имя">
                     <h:outputLabel value="#{tagA.name}"/>
@@ -58,7 +56,8 @@
                                  action="#{resultAnalyze.removeList}" update="linkPanel"/>
             </div>
         </p:panel>
-    </p:outputPanel>
+    </h:panelGroup>
+
 
     <p:growl id="growlError" showDetail="true" sticky="false" life="5000" widgetVar="growlError"/>
 
@@ -67,7 +66,7 @@
                   modal="true" showHeader="false" closable="false" resizable="false">
             <p:panelGrid columns="2">
                 <p:graphicImage library="img" name="gearRig.gif" height="50" width="50"/>
-                <p:outputLabel style="font-size: large; font: bold" value="Идет обработка..."/>
+                <p:outputLabel style="font-size: large; font: bold;" value="Идет обработка..."/>
             </p:panelGrid>
         </p:dialog>
     </h:form>
